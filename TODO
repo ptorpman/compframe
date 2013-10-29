@@ -1,0 +1,10 @@
+TODO:
+
+2006-02-06:
+        * Should have an 'info' command that could be used to investigate
+          each instance of a component. This should be a standard interface
+          like the 'connect' interface.
+        * Should have a command for listing component connections in some
+          ways...
+        
+

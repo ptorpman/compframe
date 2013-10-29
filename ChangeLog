@@ -1,0 +1,35 @@
+2013-06-18 Peter R. Torpman <peter at torpman dot se>
+	* Updated to use Tcl/Tk 8.6
+
+2011-02-22 Peter R. Torpman <peter at torpman dot se>
+	* Updated all of CompFrame to use C++ instead of C.
+
+2007-09-13 Peter R. Torpman <peter at torpman dot se>
+	* Updated to use GNU General Public License Version 3.
+	* Changed the cfi_cfg_client interface.
+	* Implemented proper handling of the 'config' command
+	  in the Cfg component.
+
+2006-11-13 Peter R. Torpman <peter at torpman dot se>
+	* Re-arranged code and Makefiles
+
+2005-07-17 Peter R. Torpman <peter at torpman dot se>
+	* Added cf_interface_deregister
+	* Added cf_component_deregister
+	* Added cf_component_destroy
+	* Added command 'remove'
+	* Updated components for interface changes
+
+2005-05-31 Peter R. Torpman <peter at torpman dot se>
+	* Rewrote the command handling, readline has been removed.
+	* Added the C component, a command handler, with (at the moment)
+	  some very rudimentary Tcl scripting support (% first on the command
+	  line will redirect input to a Tcl interpreter).
+
+2005-01-11 Peter R. Torpman <peter at torpman dot se>
+	* Added the S component, a component used for scheduling.
+
+
+2005-01-05 Peter R. Torpman <peter at torpman dot se>
+	* Version 0.1 released.
+

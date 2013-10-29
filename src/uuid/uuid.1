@@ -1,0 +1,97 @@
+.TH UUID 1 "March 2000" "CompFrame" "User Commands" 
+.SH NAME
+uuid \- generate Microsoft or OSF/DCE Globally Unique Identifiers (GUIDs)
+.SH SYNOPSIS
+.B uuid -c
+
+.B uuid -i
+
+.B uuid -s
+
+.B uuid -n
+[
+.B num
+]
+
+.B uuid
+.RB { \-h | \-? }
+
+.B uuid -e
+.RB [ uuid1 ],[ uuid2 ]
+
+.B uuid -l
+.RB [ uuid1 ],[ uuid2 ]
+
+.B uuid -g
+.RB [ uuid1 ],[ uuid2 ]
+
+.B uuid -t
+[
+.B uuid
+]
+
+.B uuid -d
+[
+.B uuid
+]
+
+.B uuid -m
+[
+.B uuid
+]
+
+.SH DESCRIPTION
+.B Uuid
+is a tool for creating Globally (or "Universally") Unique Identifiers
+(GUIDs or UUIDs) used by Microsoft COM and OSF DCE.
+.SH OPTIONS
+.TP
+.B \-c
+Create a Microsoft COM GUID as an initialized C \fBstruct\fR.
+.TP
+.B \-i
+Produce a DCE RPC IDL header.
+.TP
+.B \-s
+Generate an OSF/DCE UUID string as an initialized C structure
+.TP
+\fB-n\fR [ \fBnum\fR ]
+Create
+.B num
+new GUIDs
+.TP
+\fB-e\fR [ \fBuuid1\fR ],[ \fBuuid2\fR ]
+Exit status of 0 if uuid1 == uuid2
+.TP
+\fB-l\fR [ \fBuuid1\fR ],[ \fBuuid2\fR ]
+Exit status of 0 if uuid1 < uuid2
+.TP
+\fB-g\fR [ \fBuuid1\fR ],[ \fBuuid2\fR ]
+Exit status of 0 if uuid1 > uuid2
+.TP
+\fB-t\fR [ \fBuuid\fR ]
+Exit status of 0 if UUID is valid and not NIL UUID
+.TP
+\fB-d\fR [ \fBuuid\fR ]
+Exit status of 0 if given UUID is an OSF/DCE UUID
+.TP
+\fB-m\fR [ \fBuuid\fR ]
+Exit status of 0 if given UUID is a Microsoft GUID
+.TP
+\fB-h\fR | \fB-?\fR
+Display command line help
+.SH OUTPUT
+Without any parameters, a GUID is output in hex format.
+
+With the
+.B \-c
+parameter, an initialized C struct containing a Microsoft GUID is
+generated.
+
+Otherwise, see the
+.B OPTIONS
+section (above).
+.SH ENVIRONMENT
+No environment variables are used.
+.SH SEE ALSO
+.BR 

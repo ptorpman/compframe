@@ -1,0 +1,150 @@
+#  Copyright (c) 2007  Peter R. Torpman (peter at torpman dot se)
+# 
+#  This file is part of CompFrame (http://compframe.sourceforge.net)
+# 
+#  CompFrame is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 3 of the License, or
+#  (at your option) any later version.
+# 
+#  CompFrame is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+# 
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.or/licenses/>.
+# 
+include Makefile.inc
+
+#-----------------------------------------------------------------------------
+# Main CompFrame Program
+#-----------------------------------------------------------------------------
+RESULT := compframe
+
+SRC :=				\
+	compframe_log.c		\
+	compframe_sockets.c
+
+SRC_CC :=				\
+	CFMain.cc			\
+	CFRegistry.cc		
+
+OBJ   := $(SRC:.c=.o)
+OBJ_CC := $(SRC_CC:.cc=.o)
+
+#-----------------------------------------------------------------------------
+# M - Message Transport Component
+#-----------------------------------------------------------------------------
+RESULT_M   := compframe_m.so
+RESULT_M_L := libcompframe_m_client.a
+
+SRC_M   := CF_M.cc
+SRC_M_L := compframe_m_lib.c
+
+OBJ_M := $(SRC_M:.cc=.o)
+OBJ_M_L := $(SRC_M_L:.c=.o)
+
+#-----------------------------------------------------------------------------
+# S - Scheduler Component
+#-----------------------------------------------------------------------------
+RESULT_S   := compframe_s.so
+
+SRC_S := CF_S.cc
+
+OBJ_S := $(SRC_S:.cc=.o)
+
+
+#-----------------------------------------------------------------------------
+# Cfg - Configurator Component
+#-----------------------------------------------------------------------------
+RESULT_CFG   := compframe_cfg.so
+
+SRC_CFG := CF_Cfg.cc
+
+OBJ_CFG := $(SRC_CFG:.cc=.o)
+
+#-----------------------------------------------------------------------------
+# C - Command Handling Component
+#-----------------------------------------------------------------------------
+RESULT_C := compframe_c.so
+
+#SRC_C := compframe_c.c
+SRC_C := CF_C.cc
+
+OBJ_C := $(SRC_C:.cc=.o)
+
+CPPFLAGS += -I/usr/include/tcl8.6
+
+CXXFLAGS += -Wno-deprecated -Wno-write-strings -Wno-strict-aliasing
+
+# ****************************************************************************/
+# MAIN TARGETS
+# ****************************************************************************/
+
+all: $(RESULT) submodules samplestuff
+
+$(RESULT): $(OBJ) $(OBJ_CC) $(HEADERS)
+	@echo "[LD] $@" ; $(CC) -rdynamic $(OBJ) $(OBJ_CC) -o $@ $(LIBS) -lstdc++
+
+submodules: $(RESULT_S) $(RESULT_CFG) $(RESULT_C) $(RESULT_M) $(RESULT_M_L) 
+
+
+$(RESULT_M): $(OBJ_M)  $(HEADERS)
+	@echo "[LD] $@" ; $(CC) -shared $(OBJ_M) -o $@
+
+$(RESULT_M_L): $(OBJ_M_L)  $(HEADERS)
+	@echo "[AR] $@" ; $(AR) rc $@ $(OBJ_M_L)
+
+$(RESULT_S): $(OBJ_S)  $(HEADERS)
+	@echo "[LD] $@" ; $(CC) -shared $(OBJ_S) -o $@
+
+$(RESULT_CFG): $(OBJ_CFG)  $(HEADERS)
+	@echo "[LD] $@" ; $(CC) -shared $(OBJ_CFG)  -o $@
+
+$(RESULT_C): $(OBJ_C)  $(HEADERS)
+	@echo "[LD] $@" ; $(CC) -shared $(OBJ_C) -ltcl8.6 -o $@
+
+samplestuff:
+	(cd samples ; $(MAKE) all ; )
+
+# ****************************************************************************/
+
+
+
+
+# ****************************************************************************/
+# DEFAULT TARGETS 
+# ****************************************************************************/
+%.o: %.c
+	@echo "[CC] $^" ; $(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -c $^
+
+%.o: %.cc
+	@echo "[C++] $^" ; $(CXX) -fPIC $(CXXFLAGS) $(CPPFLAGS) -c $^
+
+clean: 
+	-rm *.o *.so $(RESULT) *~
+	(cd samples ; $(MAKE) clean ; )
+
+install: $(RESULT) $(RESULT_M) $(RESULT_S) $(RESULT_CFG) $(RESULTC)
+	@if [ -n "$(dest)" ] ; then \
+	  echo "Installing to $(dest)" ; \
+	  $(INSTALL_DIR) $(DIR_FLAGS) $(dest) ; \
+	  $(INSTALL_DIR) $(DIR_FLAGS) $(CF_BIN_DIR) ; \
+	  echo "Installing $(RESULT) in $(CF_BIN_DIR)" ; \
+	  $(INSTALL_FILES) $(BIN_FLAGS) $(RESULT) $(CF_BIN_DIR) ; \
+	  $(INSTALL_DIR) $(DIR_FLAGS) $(CF_COMP_DIR) ; \
+	  echo "Installing $(RESULT_M) in $(CF_COMP_DIR)" ; \
+	  $(INSTALL_FILES) $(BIN_FLAGS) $(RESULT_M) $(CF_COMP_DIR) ; \
+	  echo "Installing $(RESULT_S) in $(CF_COMP_DIR)" ; \
+	  $(INSTALL_FILES) $(BIN_FLAGS) $(RESULT_S) $(CF_COMP_DIR) ; \
+	  echo "Installing $(RESULT_CFG) in $(CF_COMP_DIR)" ; \
+	  $(INSTALL_FILES) $(BIN_FLAGS) $(RESULT_CFG) $(CF_COMP_DIR) ; \
+	  echo "Installing $(RESULT_C) in $(CF_COMP_DIR)" ; \
+	  $(INSTALL_FILES) $(BIN_FLAGS) $(RESULT_C) $(CF_COMP_DIR) ; \
+	else  \
+	  echo "usage: gmake install dest=<dir> " ; \
+	  false ; \
+	fi ;
+	(cd uuid ; $(MAKE) install ; )
+	(cd samples ; $(MAKE) install ; )

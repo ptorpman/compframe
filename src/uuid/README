@@ -1,0 +1,50 @@
+		Portable DCE UUID Library
+
+ATTENTION!
+----------
+This is a port of Jim Doyle's DCE UUID Library to Solaris.  Also some
+additions for Microsoft COM GUID support has been made.  The code may
+or may not still compile under Linux.
+
+If platform independance is an issue, the build system for these
+sources should be converted to using Automake
+(http://sourceware.cygnus.com/automake), Autoconf
+(http://sourceware.cygnus.com/autoconf) and Libtool
+(www.gnu.org/software/libtool) instead of just a Makefile.
+
+SOME NOTES
+----------
+
+* Use the file 'Makefile.stdalone' if you want to build the UUID facility
+without the rest of DCE. The default Makefile is part of a the DCE RPC
+suite for Linux.
+
+* Once you have built this, you need to steal the following files
+  and install them somewhere permanent on your system:
+
+	StandAlone/uuid.h           <= header with the C interfaces
+	uuid.H                      <= header with the C++ class
+	libuuid.a                   <= libraries
+	libuuid.so
+	uuid                        <= tool
+
+PORTING
+-------
+
+The UUID library should be readily portable to another platform.
+The only platform-dependent code that you will need to consider is
+that which discovers a valid IEEE 802 MAC (ethernet) address. On
+the Linux and BSD platforms, this should be fairly easy, since one can
+iterate over all of the network interface descriptors on the machine
+and find an interface which has an Ethernet address.
+
+For hosts that do not a native Ethernet, or are difficult to obtain
+the Ethernet address for an interface, the library can obtain the MAC
+address from a well known file. 
+
+See LINUX/get_ether_addr.c.   This functions in this file will need to
+be implemented on whatever target platform you wish to port.
+
+----------------------------------------------------------------------------
+Jim Doyle
+Oct 18, 1998

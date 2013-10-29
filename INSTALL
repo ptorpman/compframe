@@ -1,0 +1,17 @@
+                I N S T A L L A T I O N
+
+Compiling:
+
+    * No fancy configure scripts are currently available. To compile,
+      enter the src directory and then do the following:
+
+        gmake all
+        gmake install dest=<dir>
+
+      The CompFrame binary will be located in <dir>/bin and all components
+      in <dir>/comp.
+
+
+
+
+
