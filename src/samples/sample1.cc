@@ -42,36 +42,36 @@ static CFComponentLib theLib("TESTCOMP", create_me, set_me_up, destroy_me);
 
 // Test component
 class TestComp : 
-    public CFComponent,
-    public ITest,
-    public IConnect,
-    public IConfigClient
+  public CFComponent,
+  public ITest,
+  public IConnect,
+  public IConfigClient
 {
 public:
-    TestComp(const char* instName) : 
-            CFComponent(instName),
-            mName(instName), mConnection(NULL) { 
-    }
-    virtual ~TestComp() { }
+  TestComp(const char* instName) : 
+    CFComponent(instName),
+    mName(instName), mConnection(NULL) { 
+  }
+  virtual ~TestComp() { }
 
-    // ITest methods
-    void printHello(void);
-    void print(char *str);
+  // ITest methods
+  void printHello(void);
+  void print(char *str);
     
-    // IConnect methods
-    int connect(CFComponent *other, char *iface,
-                int argc, char **argv);
-    int disconnect(CFComponent *other, char *iface);
+  // IConnect methods
+  int connect(CFComponent *other, char *iface,
+	      int argc, char **argv);
+  int disconnect(CFComponent *other, char *iface);
 
-    // IConfigClient methods
-    int set(char* varName, char* varValue);
+  // IConfigClient methods
+  int set(char* varName, char* varValue);
 
 private:
-    // Instance name
-    string mName;
+  // Instance name
+  string mName;
 
-    // Pointer to other side's interface
-    ITest2* mConnection;
+  // Pointer to other side's interface
+  ITest2* mConnection;
 };
 
 
@@ -82,8 +82,8 @@ private:
 extern "C" void 
 dlopen_this(void)
 {
-    /* Use this function to get M into the Registry  */
-	cfGetRegistry()->registerLibrary(&theLib);
+  /* Use this function to get M into the Registry  */
+  cfGetRegistry()->registerLibrary(&theLib);
 }
 
 
@@ -93,107 +93,107 @@ dlopen_this(void)
 static CFComponent* 
 create_me(const char* inst_name)
 {
-    assert(inst_name!=NULL);
+  assert(inst_name!=NULL);
     
-    return new TestComp(inst_name);
+  return new TestComp(inst_name);
 }
 
 static int  
 destroy_me(CFComponent* comp)
 {
-    if (!comp) {
-        return 1;
-    }
+  if (!comp) {
+    return 1;
+  }
 
-    /* De-register our interfaces */
-    cfGetRegistry()->deregisterIfaces(comp);
+  /* De-register our interfaces */
+  cfGetRegistry()->deregisterIfaces(comp);
 
-    delete (TestComp*)comp;
+  delete (TestComp*)comp;
 
-    return 0;
+  return 0;
 }
 
 
 static void
 set_me_up(CFComponent* comp)
 { 
-    TestComp* t = (TestComp*) comp;
+  TestComp* t = (TestComp*) comp;
 
-    cfGetRegistry()->registerIface(comp, (ITest*)t);
-    cfGetRegistry()->registerIface(comp, (IConnect*)t);
-    cfGetRegistry()->registerIface(comp, (IConfig*)t);
+  cfGetRegistry()->registerIface(comp, (ITest*)t);
+  cfGetRegistry()->registerIface(comp, (IConnect*)t);
+  cfGetRegistry()->registerIface(comp, (IConfigClient*)t);
 }
 
 
 void  
 TestComp::printHello(void)
 {
-    fprintf(stderr,"Hello!\n");
+  fprintf(stderr,"Hello!\n");
 }
 
 void  
 TestComp::print(char* str)
 {
-    fprintf(stderr,"%s\n",str);
+  fprintf(stderr,"%s\n",str);
 }
 
 
 int 
 TestComp::connect(CFComponent* other, char* iface, int argc, char** argv)
 {
-    (void) argc;                  /* Avoid warnings */
-    (void) argv;                  /* Avoid warnings */
+  (void) argc;                  /* Avoid warnings */
+  (void) argv;                  /* Avoid warnings */
 
-    if (mConnection) {
-        fprintf(stderr,"%s:%d Already connected\n",__FILE__, __LINE__);
-        return 0;
-    }
-
-    if (strcmp(iface, TEST2IFACE_ID)) {
-        fprintf(stderr,
-                "%s:%d Interface not implemented by this comp\n",
-                __FILE__, __LINE__);
-        return 1;
-    }
-
-    mConnection = (ITest2*) cfGetRegistry()->getIface(other,iface);
-
-    if (!mConnection) {
-        fprintf(stderr,
-                "%s:%d Interface not implemented by peer\n",
-                __FILE__, __LINE__);
-        return 1;
-    }
-
-    fprintf(stderr," Connecting....: %d\n", argc);
-
-    for (int i = 0; i < argc; i++) {
-        fprintf(stderr,"      argument ARGV[%d]: (%s)\n", i, argv[i]);
-    }
-
-    /* Just call a function in the interface to show that it is possible */
-    if (mConnection->getId() == TEST2IFACE_ID) {
-        mConnection->printGoodbye();
-    }
-
+  if (mConnection) {
+    fprintf(stderr,"%s:%d Already connected\n",__FILE__, __LINE__);
     return 0;
+  }
+
+  if (strcmp(iface, TEST2IFACE_ID)) {
+    fprintf(stderr,
+	    "%s:%d Interface not implemented by this comp\n",
+	    __FILE__, __LINE__);
+    return 1;
+  }
+
+  mConnection = (ITest2*) cfGetRegistry()->getIface(other,iface);
+
+  if (!mConnection) {
+    fprintf(stderr,
+	    "%s:%d Interface not implemented by peer\n",
+	    __FILE__, __LINE__);
+    return 1;
+  }
+
+  fprintf(stderr," Connecting....: %d\n", argc);
+
+  for (int i = 0; i < argc; i++) {
+    fprintf(stderr,"      argument ARGV[%d]: (%s)\n", i, argv[i]);
+  }
+
+  /* Just call a function in the interface to show that it is possible */
+  if (mConnection->getId() == TEST2IFACE_ID) {
+    mConnection->printGoodbye();
+  }
+
+  return 0;
 }
 
 int
 TestComp::disconnect(CFComponent* other, char* iface)
 {
-    (void) other;  
-    (void) iface;
-    return 1;
+  (void) other;  
+  (void) iface;
+  return 1;
 }
 
 int
 TestComp::set(char* varName, char* varValue)
 {
-    fprintf(stderr,"  %s: Setting %s to '%s'\n",
-            __FILE__, varName, varValue);
+  fprintf(stderr,"  %s: Setting %s to '%s'\n",
+	  __FILE__, varName, varValue);
 
-    return 1;
+  return 1;
 }
 
 

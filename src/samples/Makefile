@@ -21,8 +21,8 @@ SAMPLE      := sample.so
 SAMPLE_SRC  := sample1.cc 
 SAMPLE_OBJ  := $(SAMPLE_SRC:.cc=.o)
 SAMPLE2     := sample2.so 
-SAMPLE2_SRC := sample2.c 
-SAMPLE2_OBJ := $(SAMPLE2_SRC:.c=.o)
+SAMPLE2_SRC := sample2.cc
+SAMPLE2_OBJ := $(SAMPLE2_SRC:.cc=.o)
 
 SAMPLEM     := sample_m_client
 SAMPLEM_SRC := sample_m_client.c
@@ -34,8 +34,7 @@ LDFLAGS += -L../
 # ****************************************************************************/
 # MAIN TARGETS
 # ****************************************************************************/
-all: $(SAMPLE)   $(SAMPLEM)
-#$(SAMPLE2)
+all: $(SAMPLE) $(SAMPLE2)  $(SAMPLEM)
 
 $(SAMPLE): $(SAMPLE_OBJ)
 	$(CC) -shared $^ -o $@

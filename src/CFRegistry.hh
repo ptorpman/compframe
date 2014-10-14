@@ -35,46 +35,46 @@ class CFComponent;
 class CFRegistry : public IRegistry
 {
 public:
-	static IRegistry* instance();
+  static IRegistry* instance();
 
-	// Contructor
-	CFRegistry();
-	// Destructor
-	virtual ~CFRegistry();
+  // Contructor
+  CFRegistry();
+  // Destructor
+  virtual ~CFRegistry();
 
-	// IRegistry methods
-	IRegistry* getInstance() { return instance(); }
-	int registerLibrary(CFComponentLib* lib);
-	int deregisterLibrary(const char* name);
-	CFComponent* getCompObject(const char* inst_name);
-	char* getCompName(CFComponent* obj);
-	CFComponent* createComp(const char *name, const char *inst_name);
-	int destroyComp(const char *inst_name);
-	int registerIface(CFComponent* comp, IBase* iface);
-	int deregisterIfaces(CFComponent* comp);
-	IBase* getIface(CFComponent* comp, const char* iface_name);
-    void listInstances(void);
-    void listClasses(void);
-    void listInterfaces(void);
-	IBase* getCompIface(string name, const char* iface_name);
+  // IRegistry methods
+  IRegistry* getInstance() { return instance(); }
+  int registerLibrary(CFComponentLib* lib);
+  int deregisterLibrary(const char* name);
+  CFComponent* getCompObject(const char* inst_name);
+  char* getCompName(CFComponent* obj);
+  CFComponent* createComp(const char *name, const char *inst_name);
+  int destroyComp(const char *inst_name);
+  int registerIface(CFComponent* comp, IBase* iface);
+  int deregisterIfaces(CFComponent* comp);
+  IBase* getIface(CFComponent* comp, const char* iface_name);
+  void listInstances(void);
+  void listClasses(void);
+  void listInterfaces(void);
+  IBase* getCompIface(string name, const char* iface_name);
 
 	
 private:
 
-	// Map of registered components (indexed on name)
-	map<string, CFComponentLib*> mCompLibraries;
+  // Map of registered components (indexed on name)
+  map<string, CFComponentLib*> mCompLibraries;
 
-	// Map of instantiated components (indexed on instance name)
-	map<string, CFComponent*> mInstances;
+  // Map of instantiated components (indexed on instance name)
+  map<string, CFComponent*> mInstances;
 
-	// Map of instantiated components (indexed on object)
-	map<CFComponent*, string> mInstancesReverse;
+  // Map of instantiated components (indexed on object)
+  map<CFComponent*, string> mInstancesReverse;
 
-    // Map of registered interfaces (indexed by interface)
-    map<IBase*, void*> mInterfacesByName;
+  // Map of registered interfaces (indexed by interface)
+  map<IBase*, void*> mInterfacesByName;
     
-    // Map of interfaces implemented by modules
-    multimap<CFComponent*, IBase*> mCompInterfaces;
+  // Map of interfaces implemented by modules
+  multimap<CFComponent*, IBase*> mCompInterfaces;
 	
 };
 

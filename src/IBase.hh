@@ -34,26 +34,26 @@ using namespace std;
 class IBase
 {
 public:
-    //! Constructor
-    IBase(string name, string id) {
-        mName = name;
-		mId = id;
-    }
+  //! Constructor
+  IBase(string name, string id) {
+    mName = name;
+    mId = id;
+  }
 
-    // Destructor
-    ~IBase() { }
+  // Destructor
+  ~IBase() { }
 
-	/** Returns interface name */
-	string getName() { return mName; }	
-	/** Returns interface ID */
-	string getId() { return mId; }
+  /** Returns interface name */
+  string getName() { return mName; }	
+  /** Returns interface ID */
+  string getId() { return mId; }
 
 	
 private:
-    // String representation of interface (i.e interface name)
-    string mName;
-	// Interface ID
-	string mId;
+  // String representation of interface (i.e interface name)
+  string mName;
+  // Interface ID
+  string mId;
 };
 
 /** @} */

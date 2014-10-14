@@ -28,43 +28,43 @@ using namespace std;
 class CFComponentLib
 {
 public:
-	/** Constructor
-		@param name  Name of component library
-		@param fp    Pointer to function used to create instance.
-		@param sc    Pointer to function used to setup instance.
-		@param df    Pointer to function used to delete instance.
-	*/
-	CFComponentLib(string name, cf_callback_create_t fp,
-				   cf_callback_setup_t sf, cf_callback_destroy_t df) :
-		mName(name),
-		mCreateFunc(fp),
-		mSetupFunc(sf),
-		mDestroyFunc(df) {
-	}
+  /** Constructor
+      @param name  Name of component library
+      @param fp    Pointer to function used to create instance.
+      @param sc    Pointer to function used to setup instance.
+      @param df    Pointer to function used to delete instance.
+  */
+  CFComponentLib(string name, cf_callback_create_t fp,
+		 cf_callback_setup_t sf, cf_callback_destroy_t df) :
+    mName(name),
+    mCreateFunc(fp),
+    mSetupFunc(sf),
+    mDestroyFunc(df) {
+  }
 		
-	// Destructor
-	~CFComponentLib() { }
+  // Destructor
+  ~CFComponentLib() { }
 
-	// Returns the class name
-    string getName() { return mName; }
-	// Returns the create function
-	cf_callback_create_t getCreateFunc() { return mCreateFunc; }
-	// Returns the setup function
-	cf_callback_setup_t getSetupFunc() { return mSetupFunc; }
-	// Returns the destroy function
-	cf_callback_destroy_t getDestroyFunc() { return mDestroyFunc; }
+  // Returns the class name
+  string getName() { return mName; }
+  // Returns the create function
+  cf_callback_create_t getCreateFunc() { return mCreateFunc; }
+  // Returns the setup function
+  cf_callback_setup_t getSetupFunc() { return mSetupFunc; }
+  // Returns the destroy function
+  cf_callback_destroy_t getDestroyFunc() { return mDestroyFunc; }
 
 	
 	
 private:
-	// Component class name
-	string mName;
-	// Function used to create an instance
-	cf_callback_create_t  mCreateFunc;
-	// Function to setup an instance
-	cf_callback_setup_t   mSetupFunc;
-	// Function used to delete instance
-	cf_callback_destroy_t mDestroyFunc;
+  // Component class name
+  string mName;
+  // Function used to create an instance
+  cf_callback_create_t  mCreateFunc;
+  // Function to setup an instance
+  cf_callback_setup_t   mSetupFunc;
+  // Function used to delete instance
+  cf_callback_destroy_t mDestroyFunc;
 };
 
 

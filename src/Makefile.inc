@@ -33,7 +33,7 @@ CC       = gcc
 
 WARN_FLAGS = -Wall -Wextra -Werror -Wno-unused-but-set-variable
 CFLAGS   = -std=gnu99 -g -O2 $(WARN_FLAGS)
-CPPFLAGS = -I. -DTEST -DCF_VERSION='"0.5.2"'
+CPPFLAGS = -I. -DTEST -DCF_VERSION='"0.5.3"'
 LIBS     = -ldl 
 CXXFLAGS = -g -O2  $(WARN_FLAGS)
 

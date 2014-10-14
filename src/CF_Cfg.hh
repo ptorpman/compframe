@@ -19,8 +19,8 @@
 */
 
 /** @addtogroup cfg Cfg - Configurator
-  * @{
-  */
+ * @{
+ */
 
 #define WANT_TCL_COMMANDS 1
 
@@ -58,23 +58,21 @@ using namespace std;
 //=============================================================================
 
 class CF_Cfg :
-    public CFComponent,
-	public IConfig
+  public CFComponent,
+  public IConfig
 {
 public:
-    /** Constructor */
-    CF_Cfg(const char *inst_name);
-    /** Destructor */
-    virtual ~CF_Cfg();
+  CF_Cfg(const char *inst_name);
+  virtual ~CF_Cfg();
 
-	// IConfig methods
-    int parse(char* cfgFile);
+  // IConfig methods
+  int parse(char* cfgFile);
 	
 private:
-    // Instance name
-    string mName;
+  // Instance name
+  string mName;
 
-	int getLine(FILE * fp, char *buffer, int *length);
+  int getLine(FILE * fp, char *buffer, int *length);
 
 };
 

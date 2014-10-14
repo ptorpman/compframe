@@ -86,11 +86,8 @@ public:
     virtual ~CF_CmdHandler();
 
     // ICommand methods
-
     int add(CFComponent* obj, const char* name, cfc_func_t func, char* usage);
-    /** Remove a command from the handler */
     int remove(const char* name);
-    /** Handle a command, based on a command string */
     int handle(char* cmdStr);
 
     // ISchedulerClient methods

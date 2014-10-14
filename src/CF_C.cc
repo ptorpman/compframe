@@ -264,7 +264,7 @@ CF_CmdHandler::execute(uint32_t slice)
   /* Do stuff that should be done once */
   if (showCopyStuff) {
     fprintf(stderr,
-	    "CompFrame " CF_VERSION " (c)2007-2013 Peter R. Torpman\n>> ");
+	    "CompFrame " CF_VERSION " (c)2007-2014 Peter R. Torpman\n>> ");
     showCopyStuff = 0;
 
     /* Register stdin for polling */
@@ -345,36 +345,22 @@ list_cmd(int argc, char **argv)
 {
   (void) argv;                /* Avoid warnings */
 
-  switch (argc) {
-
-  case 1:
-    /* No parameter */
+  if (argc == 0) {
     CFRegistry::instance()->listInstances();
     return 1;
-
-  case 2:
-    /* -c */
-    if (strcmp(argv[1], "-c")) {
-      cf_error_log(__FILE__, __LINE__, "Usage: list [-c | -i <name>]\n");
-      return 0;
-    }
-    CFRegistry::instance()->listClasses();
-    return 1;
-
-  case 3:
-    /* -i <name> */
-    if (strcmp(argv[1], "-i")) {
-      cf_error_log(__FILE__, __LINE__, "Usage: list [-c | -i <name>]\n");
-      return 0;
-    }
-    CFRegistry::instance()->listInterfaces();
-    return 1;
-
-  default:
-    cf_error_log(__FILE__, __LINE__, "Usage: list [-c | -i <name>]\n");
-    return 0;
   }
 
+  if (argc == 2 && !strcmp(argv[1], "-i")) {
+    CFRegistry::instance()->listInterfaces();
+    return 1;
+  }
+
+  if (argc == 2 && !strcmp(argv[1], "-c")) {
+    CFRegistry::instance()->listClasses();
+    return 1;
+  }
+
+  cf_error_log(__FILE__, __LINE__, "Usage: list [-c | -i]\n");
   return 0;
 }
 

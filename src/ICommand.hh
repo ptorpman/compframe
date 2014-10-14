@@ -40,20 +40,20 @@ typedef int (*cfc_func_t)(int argc, char** argv);
 /** Interface of the Config client */
 class ICommand  : public IBase
 {
-  public:
-    /** Constructor */
-    ICommand() : IBase("ICommand", ICOMMAND_ID) {}
-    /** Destructor */
-    virtual ~ICommand() {};
+public:
+  /** Constructor */
+  ICommand() : IBase("ICommand", ICOMMAND_ID) {}
+  /** Destructor */
+  virtual ~ICommand() {};
 
-    /** Add a command to the handler */
-    virtual 
-    int add(CFComponent* obj, const char* name,
-			cfc_func_t func, char* usage) = 0;
-    /** Remove a command from the handler */
-    virtual int remove(const char* name) = 0;
-    /** Handle a command, based on a command string */
-    virtual int handle(char* cmdStr) = 0;
+  /** Add a command to the handler */
+  virtual 
+  int add(CFComponent* obj, const char* name,
+	  cfc_func_t func, char* usage) = 0;
+  /** Remove a command from the handler */
+  virtual int remove(const char* name) = 0;
+  /** Handle a command, based on a command string */
+  virtual int handle(char* cmdStr) = 0;
 };
 
 /** @} */
